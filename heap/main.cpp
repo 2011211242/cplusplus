@@ -31,8 +31,6 @@ int main(){
         hp.push(item);
     }
 
-    //node tmp = max(ary[0], ary[1]);
-    //printf("x = %d, y=%d\n", tmp.x, tmp.y);
     vector<node> top_k = hp.top_k(4);
     for(node item : top_k){
         printf("x = %d, y=%d\n", item.x, item.y);
@@ -64,6 +62,5 @@ int main(){
         }
         hp.pop();
     }
-
 }
 
