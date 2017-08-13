@@ -3,7 +3,7 @@ PROJECT := $(shell readlink $(dir $(lastword $(MAKEFILE_LIST))) -f)
 cpp= main.cpp \
 
 test.out : $(cpp)
-	g++ -std=c++11 -O3 $^ -o $@
+	g++ -std=c++11 -g $^ -o $@
 
 all :
 	test.out
