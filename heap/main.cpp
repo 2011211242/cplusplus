@@ -60,6 +60,7 @@ int main(){
         for(node item : top_k){
             printf("x = %d, y=%d\n", item.x, item.y);
         }
+        printf("\n");
         hp.pop();
     }
 }

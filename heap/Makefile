@@ -1,14 +1,20 @@
 PROJECT := $(shell readlink $(dir $(lastword $(MAKEFILE_LIST))) -f)
 
-cpp= main.cpp 
+cpp1= main.cpp 
 inc= $(PROJECT)
+cpp2 = stl_heap.cpp
 
-test.out : $(cpp)
-	g++ -std=c++11 -O3 $^ -I $(inc) -o $@
 
-all :
+all : stl.out \
 	test.out
 
+
+test.out : $(cpp1)
+	g++ -std=c++11 -O3 $^ -I $(inc) -o $@
+
+stl.out : $(cpp2)
+	g++ -std=c++11 -O3 $^ -I $(inc) -o $@
+
 make clean:
-	rm -rf test.out
+	rm -rf test.out stl.out
 
