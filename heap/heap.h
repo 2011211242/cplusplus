@@ -114,7 +114,7 @@ template <class T> void heap<T>::adjust_down(unsigned long int idx)
 template<class T> std::vector<T> heap<T>::top_k(unsigned long int k){
     std::vector<T> tmp = array;
     std::vector<T> top;
-    unsigned int size = _size;
+    unsigned long int size = _size;
 
     for(int i = 0; i < k && i < size; i++){
         top.push_back(array[1]);
