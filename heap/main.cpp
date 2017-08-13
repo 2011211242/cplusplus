@@ -8,6 +8,7 @@ struct node {
     int x,y;
 };
 
+
 bool operator < (const node &a, const node &b){
     return a.x > b.x;
 }
@@ -63,5 +64,6 @@ int main(){
         }
         hp.pop();
     }
+
 }
 

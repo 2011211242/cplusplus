@@ -87,7 +87,7 @@ template<class T> void heap<T>::init()
     }
 }
 
-template<class T> void heap<T>::adjust_down(unsigned long int idx)
+template <class T> void heap<T>::adjust_down(unsigned long int idx)
 {
     while(idx <= father(_size)){
         unsigned long int min_idx = left_child(idx);
