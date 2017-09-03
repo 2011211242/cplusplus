@@ -12,13 +12,13 @@ struct edge
 
 int g[maxn], dfn[maxn], low[maxn], v[maxn], f[maxn], s[maxn], b[maxn], h[maxn];  
 int n, tot=0, cnt=0, ans=0, times=0, t=0, ans2;  
-  
+
 void ins(int x,int y)  
 {  
      e[++tot].x=x; e[tot].y=y;  
      e[tot].next = h[x]; h[x]=tot;  
-}  
-  
+}
+
 void tarjan(int x)  
 {  
      int y,i;  

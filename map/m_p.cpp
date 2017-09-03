@@ -22,7 +22,7 @@ void dfs(vector<node> &m_p, int start){
         unsigned int n_id = nd.next[i].e;
         if (m_p[n_id].color == WHITE){
             m_p[n_id].fth = start;
-            dfs(n_id);
+            dfs(m_p, n_id);
         }
     }
 
