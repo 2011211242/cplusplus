@@ -1,20 +1,15 @@
 #include <cstdio>
 #include <vector>
-using namespace std;
+#include "m_p.h"
 
-struct node{
-    int val;
-    unsigned int dist;
-    vector<unsigned int> next;
-    node():val(0), dist(0){}
-};
+using namespace std;
 
 int main(){
     int n;
     scanf("%d", &n);
-    vector<node> mp(n);
 
     node tmp;
     for(int i = 0; i < n; i++){
+
     }
 }
