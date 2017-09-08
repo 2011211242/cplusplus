@@ -4,6 +4,12 @@ using namespace std;
 class Empty{
 public:
     Empty(){printf("constructor of Empty\n");}
+    Empty(int _c = 0): c(_c)
+    {
+        printf("c=%d\n", this->c);
+        printf("constructor \n");
+    }
+
     Empty(const Empty& rhs){printf("constructor of copy\n");};
     ~Empty(){printf("deconstructor of Empty\n");}
 
@@ -15,7 +21,8 @@ private:
 };
 
 int main(){
-    Empty f;
+    Empty f(2);
+
     const Empty a;
     printf("Empty a----------------------\n");
     const Empty* c;
