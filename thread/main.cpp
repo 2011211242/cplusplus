@@ -1,83 +1,98 @@
 #include <cstdio>
 #include <queue>
+#include <unistd.h>
 #include <thread>
 #include <mutex>
+#include <condition_variable>
 using namespace std;
 
-mutex Lock;
-mutex full;
-mutex empty;
+mutex mtx;
+
+int producing;
+int consuming;
+
+mutex producing_mtx;
+mutex consuming_mtx;
+
+condition_variable not_full;
+condition_variable not_empty;
+
 bool fin = false;
 int count = 100;
 
 queue<int> Q;
 
-void task(){
+void task(int th_id){
+    bool ready_to_exit = false;
     while(true){
-        printf("Lock\n");
-        Lock.lock();
-        if(Q.empty()){
-            empty.lock();
+        int idx;
+        //printf("thread_id=%d while\n", th_id);
+        {
+            //unique_lock<mutex> lock(producing_mtx);
+            //printf("thread_id=%d producing_mtx\n", th_id);
+            unique_lock<mutex> lock1(mtx);
+            //printf("thread_id=%d mtx\n", th_id);
+
+            if(Q.size() == 0 && producing == 0){
+                ready_to_exit = true;
+            }
+            else{
+                while(Q.empty()){
+                    printf("empty\n");
+                    not_empty.wait(lock1);
+                }
+                idx = Q.front();
+                Q.pop();
+                not_full.notify_all();
+            }
+
+            //lock1.unlock();
+            //lock.unlock();
+            if(ready_to_exit) break;
         }
 
-        if(fin) {
-            empty.unlock();
-            return;
-        }
+        for(int i = 0; i < 1000000; i++);
+        printf("thread_id=%d, idx = %d\n", th_id, idx);
 
-        int tmp = Q.front();
-        Q.pop();
-        full.unlock();
+        {
+            unique_lock<mutex> lock2(mtx);
+            producing++;
+            //unique_lock<mutex> lock3(mtx);
 
-        printf("uLock\n");
-        Lock.unlock();
-
-        printf("%d\n", tmp);
-
-        if(tmp <= count){
-            Lock.lock();
-            printf("Lock\n");
-            if(Q.size() == count){
-                full.lock();
+            if(idx * 2 + 2 < 100000)
+            {
+                Q.push(idx * 2);
+                Q.push(idx * 2 + 1);
             }
-            Q.push(tmp * 2 + 1);
-            empty.unlock();
 
-            if(Q.size() == count){
-                full.lock();
-            }
-            Q.push(tmp * 2 + 2);
-            empty.unlock();
-            printf("uLock\n");
-            Lock.unlock();
+            producing --;
+            not_empty.notify_all();
+            //lock3.unlock();
+            //lock2.unlock();
         }
     }
 }
 
 int main(){
     vector<thread> threads;
-    Q.push(0);
+    Q.push(1);
 
     /*
-    for(int i = 0; i < 10; i++){
-        Lock.unlock();
-    }
-    */
+       for(int i = 0; i < 10; i++){
+       Lock.unlock();
+       }
+       */
 
-    Lock.lock();
-    Lock.lock();
-    Lock.lock();
-    Lock.lock();
 
-    printf("locked\n");
+    //printf("locked\n");
 
-    /*
-    for(int i = 0; i < 4; i++){
-        threads.push_back(thread(task));
+    int thread_num = 4;
+    for(int i = 0; i < thread_num; i++){
+        threads.push_back(thread(task, i));
+        sleep(1);
     }
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < thread_num; i++){
         threads[i].join();
     }
-    */
 }
