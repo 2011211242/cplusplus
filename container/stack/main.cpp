@@ -36,8 +36,6 @@ public:
         printf("destructor\n");
         if(this -> ptr != NULL){
             delete [] ptr;
-
-            printf("destructed\n");
             this -> ptr = NULL;
         } 
     }
