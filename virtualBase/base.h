@@ -7,7 +7,7 @@ class Base{
 public:
     Base(){printf("constructor of virtual Base\n");};
     virtual ~Base(){printf("destructor of virtual Base\n");}
-    virtual void fun() = 0;
+    virtual void fun(){printf("This is virtual Base\n");};
 private:
     int a;
 };
