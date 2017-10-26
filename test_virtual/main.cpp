@@ -11,11 +11,12 @@ public:
 class B:public A{
 public:
     virtual void func(){
-        printf("Hello A\n");
+        printf("Hello B\n");
     }
 };
 
 int main(){
-    A * ptr = NULL;
+    A * ptr = new B;//NULL;
     ptr -> func();
 }
+

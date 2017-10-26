@@ -53,6 +53,7 @@ int main(){
     thread t4(task, 3);
     thread t5(task, 4);
     thread t6(task, 5);
+    thread t6(task, 5);
 
     t1.join();
     t2.join();

@@ -18,18 +18,21 @@ struct node{
     int val;
 };
 
+
 void preorder_travel(node * root){
     stack<node *> stk;
     while(root || !stk.empty()){
         while(root){
             printf("%d ", root -> val);
-            stk.push(root -> right);
+            stk.push(root);
             root = root -> left;
         }
         root = stk.top();
         stk.pop();
+        root = root -> right;
     }
 }
+
 
 void inorder_travel(node * root){
     stack<node *> stk;
@@ -45,6 +48,7 @@ void inorder_travel(node * root){
         root = root -> right;
     }
 }
+
 
 void postorder_travel(node *root){
     if(root == NULL) return;
@@ -66,6 +70,7 @@ void postorder_travel(node *root){
         root = root->right;
     }
 }
+
 
 int main(){
     node a;
