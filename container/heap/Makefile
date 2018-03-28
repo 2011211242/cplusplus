@@ -1,3 +1,4 @@
+:q
 PROJECT := $(shell readlink $(dir $(lastword $(MAKEFILE_LIST))) -f)
 
 cpp1= main.cpp 
